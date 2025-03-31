@@ -1,10 +1,10 @@
 import { useState } from "react"
-import Chip from '../node_modules/@mui/material/Chip';
-import Rating from '../node_modules/@mui/material/Rating';
-import Card from '../node_modules/@mui/material/Card';
-import CardHeader from '../node_modules/@mui/material/CardHeader';
-import CardMedia from '../node_modules/@mui/material/CardMedia';
-import CardContent from '../node_modules/@mui/material/CardContent';
+import Chip from '@mui/material/Chip';
+import Rating from '@mui/material/Rating';
+import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
 
 export default function Item({item}) {
   const [value, setValue] = useState(item.rating);
@@ -13,7 +13,7 @@ export default function Item({item}) {
     <Card sx={{ maxWidth: 450 }}>
     <CardHeader
         title={item.name}
-
+        sx={{ minHeight: 120}}
       />
       <CardMedia
         component="img"

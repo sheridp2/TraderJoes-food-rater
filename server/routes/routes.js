@@ -12,7 +12,9 @@ router.post('/post', async (req, res) => {
         totalRatings: req.body.totalRatings,
         cumulativeRating: req.body.cumulativeRating,
         price: req.body.price,
-        tags: req.body.tags
+        tags: req.body.tags,
+        topPick: req.body.topPick,
+        bottomPick: req.body.bottomPick
 
     })
 

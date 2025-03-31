@@ -31,6 +31,12 @@ const productSchema = new mongoose.Schema({
     },
     tags: {
       type: [String]
+    },
+    topPick:{
+      type: Boolean,
+    },
+    bottomPick: {
+      type: Boolean,
     }
 
 })

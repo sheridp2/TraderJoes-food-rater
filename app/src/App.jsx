@@ -1,11 +1,12 @@
-import ItemList from './ItemList';
+import ItemList from "./ItemList";
 
 function App() {
-
   return (
     <>
-      <h1>Trader Joes Food Rater</h1>
-      <div className="card">
+      <div>
+        <h1>Trader Joes Food Rater</h1>
+      </div>
+      <div>
         <ItemList />
       </div>
     </>
