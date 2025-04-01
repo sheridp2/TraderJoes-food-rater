@@ -24,7 +24,7 @@ export default function ItemList() {
 
   return (
     <>
-      <Grid container spacing={2} style={{ justifyContent: "center" }}>
+      <Grid container spacing={3} sx={{ pt: 2, justifyContent: "center" }}>
         {itemsList}
       </Grid>
     </>

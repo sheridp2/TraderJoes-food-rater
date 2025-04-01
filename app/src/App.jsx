@@ -1,14 +1,11 @@
 import ItemList from "./ItemList";
+import Header from "./Header";
 
 function App() {
   return (
     <>
-      <div>
-        <h1>Trader Joes Food Rater</h1>
-      </div>
-      <div>
-        <ItemList />
-      </div>
+      <Header />
+      <ItemList />
     </>
   );
 }
