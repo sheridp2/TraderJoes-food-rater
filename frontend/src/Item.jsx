@@ -31,7 +31,7 @@ export default function Item({ item }) {
                   setValue(newValue);
                 }}
               />
-              <p>All Users Rating</p>
+              <p>Average User Rating</p>
               <Rating
                 name="simple-controlled"
                 value={item.rating}

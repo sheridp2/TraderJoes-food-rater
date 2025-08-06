@@ -8,7 +8,7 @@ export default function ItemList() {
   const [items, setItems] = useState();
 
   useEffect(() => {
-    axios.get("http://localhost:3000/api/getAll").then((res) => {
+    axios.get("http://localhost:8000/api/v1/item/getAll").then((res) => {
       console.log(res.data);
       setItems(res.data);
     });

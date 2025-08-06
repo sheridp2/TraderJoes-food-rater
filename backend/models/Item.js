@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const productSchema = new mongoose.Schema({
+const itemSchema = new mongoose.Schema({
     name: {
         required: true,
         type: String
@@ -38,7 +38,6 @@ const productSchema = new mongoose.Schema({
     bottomPick: {
       type: Boolean,
     }
-
 })
 
-module.exports = mongoose.model('Data', productSchema)
+module.exports = mongoose.model('Data', itemSchema)

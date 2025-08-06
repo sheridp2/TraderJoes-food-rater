@@ -8,7 +8,7 @@ export default function ItemPage() {
   const [item, setItem] = useState();
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/api/getOne/${params.pid}`).then((res) => {
+    axios.get(`http://localhost:8000/api/v1/item/get/${params.pid}`).then((res) => {
       setItem(res.data);
       console.log(res.data);
     });
