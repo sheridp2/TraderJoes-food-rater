@@ -1,35 +1,68 @@
-import { useState } from 'react';
-import Container from '@mui/material/Container';
+// import Container from "@mui/material/Container";
 
-import ItemList from "./ItemList";
-import Header from "./Header";
-import Login from './Login';
+// import ItemList from "./ItemList";
+// import Header from "./Header";
+// import Login from "./pages/Login";
 
-function setToken(userToken) {
-  sessionStorage.setItem('token', JSON.stringify(userToken));
-}
+// function App() {
+//   return (
+//     <Container maxWidth="xl">
+//       <Header />
+//       <ItemList />
+//     </Container>
+//   );
+// }
 
-function getToken() {
-  const tokenString = sessionStorage.getItem('access_token');
-  const userToken = JSON.parse(tokenString);
-  return userToken?.token
-}
+// export default App;
 
-function App() {
-  const token = getToken();
 
-  // if(!token) {
-  //   return <Login setToken={setToken} />
-  // }
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router";
+import Login from "./pages/Auth/Login";
+import SignUp from "./pages/Auth/SignUp";
+import Home from "./pages/Dashboard/Home";
+import UserProvider from "./context/userContext";
+import { Toaster } from "react-hot-toast";
 
+const App = () => {
   return (
-    <>
-    <Container maxWidth='xl'>
-      <Header />
-      <ItemList />
-    </Container>
-    </>
+    <UserProvider>
+      <div>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Root />} />
+            <Route path="/login" exact element={<Login />} />
+            <Route path="/signup" exact element={<SignUp />} />
+            <Route path="/dashboard" exact element={<Home />} />
+          </Routes>
+        </Router>
+      </div>
+      <Toaster
+        toastOptions={{
+          className: "",
+          style: {
+            fontSize: "13px",
+          },
+        }}
+      />
+    </UserProvider>
   );
-}
+};
 
 export default App;
+
+const Root = () => {
+  //Check if token exists in localStorage
+  const isAuthenticated = !!localStorage.getItem("token");
+
+  return isAuthenticated ? (
+    <Navigate to="/dashboard" />
+  ) : (
+    <Navigate to="/login" />
+  );
+};
