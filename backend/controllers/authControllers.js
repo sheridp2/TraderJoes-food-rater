@@ -64,18 +64,35 @@ exports.loginUser = async (req, res) => {
 };
 
 exports.getUserInfo = async (req, res) => {
-  
   try {
     const user = await User.findById(req.user.id).select("-password");
-  if(!user){
-    return res.status(404).json({ message: "User not found"})
-  }
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
-  res.status(200).json(user)
-
+    res.status(200).json(user);
   } catch (error) {
     res
       .status(500)
       .json({ message: "Error getting user", error: error.message });
+  }
+};
+
+exports.addUserItemRating = async (req, res) => {
+  const { userId, itemId, rating } = req.body;
+  try {
+    const user = await User.findOneAndUpdate({_id: userId}, {
+      $push: {
+                productRatings: {
+                    _id: itemId,
+                    rating,
+                },
+            },
+    });
+    res.status(200).json(user);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error updating user", error: error.message });
   }
 };
