@@ -6,11 +6,21 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { UserContext } from "../../context/userContext";
+import toast from "react-hot-toast";
 
 export default function Header() {
-  const { user } = useContext(UserContext);
+    const { user, clearUser } = useContext(UserContext);
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    toast.success("Succcessfully logged out");
+    localStorage.clear();
+    clearUser();
+    navigate("/dashboard");
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -19,9 +29,11 @@ export default function Header() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Trader Joes Food Rater
           </Typography>
-          <Button color="inherit">
-            {user ? <Link to="/login">Logout</Link> : <Link to="/login">Login</Link>}
-          </Button>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            {user && `Welcome back, ${user?.fullName}` }
+            
+          </Typography>
+            {user ? <Button onClick={handleLogout} color="red">Logout </Button>: <Button color="inherit"><Link to="/login">Login</Link></Button>}
         </Toolbar>
       </AppBar>
     </Box>

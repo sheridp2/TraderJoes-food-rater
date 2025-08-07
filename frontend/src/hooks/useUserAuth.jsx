@@ -25,11 +25,13 @@ export const useUserAuth = () => {
                 console.error("Failed to fetch user info", error)
                 if(isMounted) {
                     clearUser();
-                    navigate("/login")
+                    navigate("/dashboard")
                 }
             }
         }
-        fetchUserInfo();
+        if(localStorage.getItem("token")){
+          fetchUserInfo();
+        }
 
         return() => {
             isMounted = false;
