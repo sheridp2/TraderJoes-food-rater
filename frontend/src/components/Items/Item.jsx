@@ -12,7 +12,19 @@ import { API_PATHS } from "../../../utils/apiPaths";
 
 export default function Item({ item }) {
   const { user } = useContext(UserContext);
-  const [rating, setRating] = useState(0);
+  const getItemRating = () => {
+    let result = 0;
+    if (user) {
+      const temp = user?.productRatings.filter(
+        (rating) => rating?.itemName === item.name
+      );
+      result = temp[0]?.rating;
+    }
+    return result;
+  };
+
+  const [updateRating, setUpdateRating] = useState(false);
+  const [rating, setRating] = useState(getItemRating());
   const [error, setError] = useState(null);
 
   const addUserItemRating = async (userId, itemId, itemName, rating) => {
@@ -49,17 +61,23 @@ export default function Item({ item }) {
   };
 
   useEffect(() => {
+    if (user) {
+      
+      setRating(getItemRating());
+      
+    }
+  }, [user]);
+
+  useEffect(() => {
     const currentItem = user?.productRatings.find((val) => {
-      return val.itemName === item.name
-    })
-    
+      return val.itemName === item.name;
+    });
 
     if (rating > 0) {
-      if(currentItem === undefined){
+      if (currentItem === undefined) {
         addUserItemRating(user._id, item._id, item.name, rating);
-      }
-      else {
-        updateUserItemRating(user._id, item.name, rating)
+      } else {
+        updateUserItemRating(user._id, item.name, rating);
       }
     }
   }, [rating]);

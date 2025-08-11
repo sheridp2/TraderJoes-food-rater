@@ -9,7 +9,6 @@ export default function ItemList() {
 
   useEffect(() => {
     axios.get("http://localhost:8000/api/v1/item/getAll").then((res) => {
-      console.log(res.data);
       setItems(res.data);
     });
   }, []);
