@@ -5,7 +5,8 @@ const {
   registerUser,
   loginUser,
   getUserInfo,
-  addUserItemRating
+  addUserItemRating,
+  updateUserItemRating
 } = require("../controllers/authControllers");
 
 const router = express.Router();
@@ -17,5 +18,7 @@ router.post("/login", loginUser);
 router.get("/getUser", protect, getUserInfo);
 
 router.patch("/addUserItemRating", protect, addUserItemRating)
+
+router.patch("/updateUserItemRating", protect, updateUserItemRating)
 
 module.exports = router;

@@ -15,11 +15,28 @@ export default function Item({ item }) {
   const [rating, setRating] = useState(0);
   const [error, setError] = useState(null);
 
-  const addUserItemRating = async (userId, itemId, rating) => {
+  const addUserItemRating = async (userId, itemId, itemName, rating) => {
     try {
       await axiosInstance.patch(API_PATHS.AUTH.ADD_USER_ITEM_RATING, {
         userId,
         itemId,
+        itemName,
+        rating,
+      });
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        setError(error.response.data.message);
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
+    }
+  };
+
+  const updateUserItemRating = async (userId, itemName, rating) => {
+    try {
+      await axiosInstance.patch(API_PATHS.AUTH.UPDATE_USER_ITEM_RATING, {
+        userId,
+        itemName,
         rating,
       });
     } catch (error) {
@@ -32,8 +49,18 @@ export default function Item({ item }) {
   };
 
   useEffect(() => {
+    const currentItem = user?.productRatings.find((val) => {
+      return val.itemName === item.name
+    })
+    
+
     if (rating > 0) {
-      addUserItemRating(user._id, item._id, rating);
+      if(currentItem === undefined){
+        addUserItemRating(user._id, item._id, item.name, rating);
+      }
+      else {
+        updateUserItemRating(user._id, item.name, rating)
+      }
     }
   }, [rating]);
 

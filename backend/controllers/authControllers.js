@@ -78,17 +78,44 @@ exports.getUserInfo = async (req, res) => {
   }
 };
 
+//TODO: Fix pushing multiple versions of same id
 exports.addUserItemRating = async (req, res) => {
-  const { userId, itemId, rating } = req.body;
+  const { userId, itemId, itemName, rating } = req.body;
   try {
-    const user = await User.findOneAndUpdate({_id: userId}, {
-      $push: {
-                productRatings: {
-                    _id: itemId,
-                    rating,
-                },
-            },
-    });
+    const user = await User.updateOne(
+      {
+        _id: userId,
+        productRatings: { $ne: itemId },
+      },
+      {
+        $addToSet: {
+          productRatings: { _id: itemId, itemName: itemName, rating: rating },
+        },
+      }
+    );
+    res.status(200).json(user);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error updating user", error: error.message });
+  }
+};
+
+exports.updateUserItemRating = async (req, res) => {
+  const { userId, itemName, rating } = req.body;
+
+  try {
+    const user = await User.updateOne(
+      {
+        _id: userId,
+        "productRatings.itemName": itemName,
+      },
+      {
+        $set: {
+          "productRatings.$.rating": rating,
+        },
+      }
+    );
     res.status(200).json(user);
   } catch (error) {
     res
